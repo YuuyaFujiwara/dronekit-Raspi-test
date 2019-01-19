@@ -28,5 +28,5 @@ print " Mode: %s" % vehicle.mode.name    # settable
 vehicle.close()
 
 # Shut down simulator
-sitl.stop()
+#sitl.stop()
 print("Completed")
