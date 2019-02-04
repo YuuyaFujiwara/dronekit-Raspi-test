@@ -34,6 +34,21 @@ vehicle = connect(connection_string, wait_ready=True, vehicle_class=MyVehicle)
 # もしくはフライトコントローラー側に保存している設定を読み出す。
 
 
+# SERVO_CHに値を設定する。
+def set_servo_ch( servo_ch, servo_val ):
+    #MAVLinkコマンドメッセージを生成する
+    msg = vehicle.message_factory.command_long_encode(
+        0, 0,   #ターゲットシステム、コンポーネント
+        mavutil.mavlink.MAV_CMD_DO_SET_SERVO, #コマンド
+        0,  #confirmation 
+        servo_ch,   # param1 servo_number
+        servo_val,  # param2 PWM (microseconds, 1000 to 2000 typical)
+        0, 0, 0, 0, 0)  # param 3 ~ 7 not used
+
+    # MAVLinkメッセージ送信
+    vehicle.send_mavlink(msg)
+
+
 # 速度に応じて籾送りCHのPWM値を制御する。
 def set_momiokuri_PWM():
     # 籾送り制御CH
@@ -48,17 +63,9 @@ def set_momiokuri_PWM():
         ship_spd = 10.0
     momiokuri_pwm =  ship_spd * 100.0 + 1000
 
-    #MAVLinkコマンドメッセージを生成する
-    msg = vehicle.message_factory.command_long_encode(
-        0, 0,   #ターゲットシステム、コンポーネント
-        mavutil.mavlink.MAV_CMD_DO_SET_SERVO, #コマンド
-        0,  #confirmation 
-        momiokuri_ch,   # param1 servo_number
-        momiokuri_pwm,  # param2 PWM (microseconds, 1000 to 2000 typical)
-        0, 0, 0, 0, 0)  # param 3 ~ 7 not used
+    # サーボCH設定
+    set_servo_ch( momiokuri_ch, momiokuri_pwm )
 
-    # MAVLinkメッセージ送信
-    vehicle.send_mavlink(msg)
 
 # groundspeed変化時のコールバック
 # デコレーターなので登録せずにコールバックされる
@@ -66,7 +73,7 @@ def set_momiokuri_PWM():
 def decorated_groundspeed_callback(self, attr_name, value):
     print(" PARAMETER CALLBACK: %s changed to: %s" % (attr_name, value))
     # 速度に応じて籾送りCHのPWM値を制御する。
-    set_momiokuri_PWM()
+    # set_momiokuri_PWM()
 
 
 # サーボ出力変更時のコールバック
@@ -98,6 +105,14 @@ while True:
     # 速度に応じて籾送りCHのPWM値を制御する。
     set_momiokuri_PWM()
     '''
+
+    set_servo_ch( 8, 1000 )
+    time.sleep(1)
+
+    set_servo_ch( 8, 1500 )
+    time.sleep(1)
+
+    set_servo_ch( 8, 2000 )
     time.sleep(1)
 
 
