@@ -105,7 +105,7 @@ while True:
     # 速度に応じて籾送りCHのPWM値を制御する。
     set_momiokuri_PWM()
     '''
-
+'''
     set_servo_ch( 7, 1000 )
     time.sleep(1)
 
@@ -113,6 +113,7 @@ while True:
     time.sleep(1)
 
     set_servo_ch( 5, 2000 )
+    '''
     time.sleep(1)
 
 

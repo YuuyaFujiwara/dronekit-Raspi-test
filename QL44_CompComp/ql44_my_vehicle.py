@@ -142,6 +142,8 @@ class MyVehicle(Vehicle):
             self._servo_output_raw.sv6_raw 	= message.servo6_raw
             self._servo_output_raw.sv7_raw 	= message.servo7_raw
             self._servo_output_raw.sv8_raw 	= message.servo8_raw
+            '''
+            （NAVIO2上のRoverでは）message.servo9_raw～　使えないっぽい
             self._servo_output_raw.sv9_raw 	= message.servo9_raw
             self._servo_output_raw.sv10_raw = message.servo10_raw
             self._servo_output_raw.sv11_raw = message.servo11_raw
@@ -150,6 +152,7 @@ class MyVehicle(Vehicle):
             self._servo_output_raw.sv14_raw = message.servo14_raw
             self._servo_output_raw.sv15_raw = message.servo15_raw
             self._servo_output_raw.sv16_raw = message.servo16_raw
+            '''
             
             # Notify all observers of new message (with new value)
             #   Note that argument `cache=False` by default so listeners
