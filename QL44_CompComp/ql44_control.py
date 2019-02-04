@@ -106,13 +106,13 @@ while True:
     set_momiokuri_PWM()
     '''
 
-    set_servo_ch( 8, 1000 )
+    set_servo_ch( 7, 1000 )
     time.sleep(1)
 
-    set_servo_ch( 8, 1500 )
+    set_servo_ch( 6, 1500 )
     time.sleep(1)
 
-    set_servo_ch( 8, 2000 )
+    set_servo_ch( 5, 2000 )
     time.sleep(1)
 
 
